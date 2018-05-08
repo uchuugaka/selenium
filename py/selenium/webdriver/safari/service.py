@@ -17,6 +17,7 @@
 
 import os
 from selenium.webdriver.common import service, utils
+from selenium.common.exceptions import SessionNotCreatedException
 from subprocess import PIPE
 
 
@@ -37,8 +38,8 @@ class Service(service.Service):
             if "Safari Technology Preview" in executable_path:
                 message = "Safari Technology Preview does not seem to be installed. You can download it at https://developer.apple.com/safari/download/."
             else:
-                message = "SafariDriver was not found; are you running Safari 10 or later? You can download Safari at https://developer.apple.com/safari/download/."
-            raise Exception(message)
+                message = "SafariDriver was not found. Are you running Safari 10 or later? You can download Safari betas at https://developer.apple.com/safari/download/. Otherwise, you may have more severe system issues."
+            raise SessionNotCreatedException(message)
 
         if port == 0:
             port = utils.free_port()
